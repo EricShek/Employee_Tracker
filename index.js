@@ -35,12 +35,19 @@ function menu(){
     else if(response.menu==="view all employees"){
         viewEmployees()
     }
+    else if(response.menu==="add a role"){
+        addRole()
+    }    
     else if(response.menu==="add an employee"){
         addEmployees()
     }
     else if(response.menu==="add an department"){
         addDepartment()
     }
+    else if(response.menu==="update an employee role"){
+        updateEmployeeRole()
+    }
+
 
   })
     
@@ -60,6 +67,80 @@ function viewRoles(){
 }
 
 
+// function updateEmployeeRole(){
+//     inquirer.prompt([
+//         {
+//             type: "input",
+//             name: "id",
+//             message: "Type in employee id to update"
+//         },
+//         {
+//             type: "imput",
+//             name: "role",
+//             message: "Employee's new role?"
+//         },
+//         {
+//             type: "input",
+//             name: "department",
+//             message: "Employee's new department?"
+//         },
+//         {
+//             type: "input",
+//             name: "salary",
+//             message: "Employee's new salary?"
+//         },
+//         {
+//             type: "input",
+//             name: "manager",
+//             message: "Employee's new manager?"
+//         }.then((res)=>{
+
+//                 })
+//     ])
+    
+// }
+
+// function addRole(){
+
+//     inquirer.prompt([{
+//         type: "input",
+//         name: "title",
+//         message: " What is the name of the new role?",
+//     },
+//         {
+//             type: "input",
+//             name: "department",
+//             message: "what department does this role being assign to?"
+
+// },
+// {
+//     type: "imput",
+//     name: "salary",
+//     message: "Salary amount for this role?"
+// }
+
+//     ]).then((res)=>{
+
+//     })
+// }
+
+// function addDepartment(){
+
+//     inquirer.prompt([
+//         {
+//             type: "imput",
+//             name: "name",
+//             message: "What is the department you want to add?",
+//         }
+//     ])
+//     .then ((res)=>
+//     {
+//         const newDepartment = "INSERT INTO departments"
+
+//     })
+
+
+// }
 
 function addEmployees(){
     db.query("select title as name, id as value from role", (err, roleData)=>{
