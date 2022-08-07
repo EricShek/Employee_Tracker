@@ -26,14 +26,20 @@ const menuQuestion=[
 function menu(){
   inquirer.prompt(menuQuestion)
   .then(response=>{
-    if(response.menu==="view all employees"){
-        viewEmployees()
-    }
-    else if(response.menu==="view all departments"){
+    if(response.menu==="view all departments"){
         viewDepartments()
+    }
+    else if(response.menu==="view all roles"){
+        viewRoles()
+    }
+    else if(response.menu==="view all employees"){
+        viewEmployees()
     }
     else if(response.menu==="add an employee"){
         addEmployees()
+    }
+    else if(response.menu==="add an department"){
+        addDepartment()
     }
 
   })
@@ -46,8 +52,17 @@ function viewDepartments(){
     })
 }
 
+function viewRoles(){
+    db.query("select* from role", (err, data) =>{
+        console.table(data)
+        menu()
+    })
+}
+
+
+
 function addEmployees(){
-    db.query("select title as name, id as value from role", (er, roleData)=>{
+    db.query("select title as name, id as value from role", (err, roleData)=>{
 
            db.query(`select CONCAT(first_name, " " , last_name) as name,  id as value from employee where  manager_id is null `, (err, managerData)=>{
             const employeeAddQuestions=[
@@ -60,7 +75,7 @@ function addEmployees(){
                 {
                     type:"input",
                     name:"last_name",
-                    message:"What is your first name?",
+                    message:"What is your last name?",
             
                 },
                 {
@@ -68,7 +83,8 @@ function addEmployees(){
                     name:"role_id",
                     message:"Choose the following role title",
                     choices:roleData
-                },{
+                },
+                {
                     type:"list",
                     name:"manager_id",
                     message:"Choose the following manager",

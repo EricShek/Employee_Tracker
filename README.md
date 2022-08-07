@@ -2,7 +2,7 @@
 
 ## Description
 
-This challenge was to create employee tracker allow user to use command line in Node, Express and SQL.  
+This challenge was to create employee tracker allow user to use terminal application command line in Node, Express and SQL.  
 
 
 ## Table of Contents (Optional)
