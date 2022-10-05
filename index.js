@@ -1,9 +1,9 @@
-const inquirer=require("inquirer")
+const inquirer = require("inquirer")
 const db = require("./config/connection")
 
 require("console.table")
 
-db.connect( ()=>{
+db.connect(()=>{
     menu()
 })
 /*
@@ -22,47 +22,58 @@ const menuQuestion=[
 
 
 
-
 function menu(){
   inquirer.prompt(menuQuestion)
-  .then(response=>{
-    if(response.menu==="view all departments"){
-        viewDepartments()
-    }
-    else if(response.menu==="view all roles"){
-        viewRoles()
-    }
-    else if(response.menu==="view all employees"){
-        viewEmployees()
-    }
-    else if(response.menu==="add a role"){
-        addRole()
-    }    
-    else if(response.menu==="add an employee"){
-        addEmployees()
-    }
-    else if(response.menu==="add an department"){
-        addDepartment()
-    }
-    else if(response.menu==="update an employee role"){
+  .then(res=>{
+    switch(res.menu) {
+        case "view all departments":
+        viewDepartments();
+        break;
+
+        case "view all roles":
+        viewRoles();
+        break;
+
+        case "view all employees":
+        viewEmployees();
+        break;
+
+        case "add a role":
+        addRole();
+        break;
+
+        case "add an employee":
+        addEmployees();
+        break;  
+
+        case "add an department":
+        addDepartment();
+        break;
+
+        case "update an employee role":
         updateEmployeeRole()
+        break;
     }
-
-
   })
-    
-}
+};
+
 function viewDepartments(){
-    db.query("select* from department", (err, data)=>{
-        console.table(data)
+    db.query(`SELECT * FROM department`, function(err, res){
+        if (err) throw err
+        console.table(res)
         menu()
     })
 }
 
 function viewRoles(){
-    db.query("select* from role", (err, data) =>{
-        console.table(data)
+    db.query(`SELECT * FROM role`, function(err, res){
+        if (err) throw err
+        console.table(res)
         menu()
+        
+    // (err, response) =>{
+    //     console.table(data)
+    //     menu()
     })
 }
 
@@ -124,23 +135,23 @@ function viewRoles(){
 //     })
 // }
 
-// function addDepartment(){
+function addDepartment(){
 
-//     inquirer.prompt([
-//         {
-//             type: "imput",
-//             name: "name",
-//             message: "What is the department you want to add?",
-//         }
-//     ])
-//     .then ((res)=>
-//     {
-//         const newDepartment = "INSERT INTO departments"
+    inquirer.prompt([
+        {
+            type: "imput",
+            name: "name",
+            message: "What is the department you want to add?",
+        }
+    ])
+    .then (function(res) {
+        const newDepartment = "INSERT INTO departments SET ?" 
+db.query(newDepartment, {name: res.name})
+    })
 
-//     })
+console.table (res)
+}
 
-
-// }
 
 function addEmployees(){
     db.query("select title as name, id as value from role", (err, roleData)=>{
